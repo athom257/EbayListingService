@@ -14,12 +14,16 @@ public class ListingManager {
 
     private static VendorSkuItemDAO vendorSkuItemDAO = VendorSkuItemDAO.getInstance();
 
-    public static void process(String skuCode, String listingPrice) throws Exception {
+    public static void process(String skuCode, String listingPrice, String promoCode) throws Exception {
         String apiName = "VerifyAddItem";
 
         // Does sku exists in ebay_sku_item table.
         int skuCount = EbaySkuItemDAO.getInstance().getSkuCount(skuCode);
-        System.out.println("Sku count: " + skuCount);
+
+        if (skuCount > 0) {
+            System.out.println("***** SKU ALREADY EXISTS *****");
+            return;
+        }
 
         VendorSkuItemDTO vendorSkuItemDTO =
                 vendorSkuItemDAO.queryVendorSkuItem(skuCode);
@@ -33,6 +37,9 @@ public class ListingManager {
         }
 
         //HttpClient.sendRequest(xmlRequest, apiName);
+
+        /* Insert into sku item table. */
+        // EbaySkuItemDAO.getInstance().insertSkuItem(skuCode, listingPrice, promoCode);
     }
 
     private static String jaxbObjectToXML(Object obj) {
