@@ -13,10 +13,6 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 public class HttpClient {
- /*
-        https://howtodoinjava.com/library/jaxrs-client-httpclient-get-post/
-
- */
 
     public static void sendRequest(String xmlRequest, String apiCallName) throws Exception {
         DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -50,7 +46,6 @@ public class HttpClient {
             {
                 throw new RuntimeException("Failed with HTTP error code : " + statusCode);
             }
-
 
             String responseXML = EntityUtils.toString(response.getEntity(), Charset.forName("UTF-8").toString());
             System.out.println(responseXML);
