@@ -2,6 +2,7 @@ package com.listing.common;
 
 import com.listing.dto.VendorSkuItemDTO;
 import com.listing.util.Constants;
+import com.listing.util.PropertiesConfig;
 import ebay.apis.eblbasecomponents.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -169,7 +170,7 @@ public class RequestItemGenerator {
 
     private static XMLRequesterCredentialsType getRequesterCredentials() {
         XMLRequesterCredentialsType xmlRequesterCredentialsType = new XMLRequesterCredentialsType();
-        xmlRequesterCredentialsType.setEBayAuthToken(Constants.TOKEN);
+        xmlRequesterCredentialsType.setEBayAuthToken(PropertiesConfig.getInstance().getCredentials().getProperty("auth.token"));
         return xmlRequesterCredentialsType;
     }
 

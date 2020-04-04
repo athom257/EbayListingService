@@ -15,8 +15,6 @@ public class Constants {
 
     public static final String DB_DRIVER_CLASS_NAME = "org.postgresql.Driver";
     public static final String DB_URL = "jdbc:postgresql://localhost:5432/testdb";
-    public static final String DB_USER = "";
-    public static final String DB_PASSWORD = "";
 
     public static final String TOKEN = "";
     public static final String X_EBAY_API_COMPATIBILITY_LEVEL = "X-EBAY-API-COMPATIBILITY-LEVEL";

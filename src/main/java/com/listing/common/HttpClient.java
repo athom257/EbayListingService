@@ -1,6 +1,7 @@
 package com.listing.common;
 
 import com.listing.util.Constants;
+import com.listing.util.PropertiesConfig;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -17,7 +18,7 @@ public class HttpClient {
 
  */
 
-    public static void sendRequest(String xmlRequest) throws Exception {
+    public static void sendRequest(String xmlRequest, String apiCallName) throws Exception {
         DefaultHttpClient httpClient = new DefaultHttpClient();
 
         try {
@@ -27,11 +28,11 @@ public class HttpClient {
             //Set the API media type in http content-type header
             postRequest.addHeader(Constants.CONTENT_TYPE, "application/xml");
             postRequest.addHeader(Constants.X_EBAY_API_COMPATIBILITY_LEVEL, "1081");
-            postRequest.addHeader(Constants.X_EBAY_API_CALL_NAME, "AddItem");
+            postRequest.addHeader(Constants.X_EBAY_API_CALL_NAME, apiCallName);
             postRequest.addHeader(Constants.X_EBAY_API_SITEID, "0");
-            postRequest.addHeader(Constants.X_EBAY_API_DEV_NAME, "");
-            postRequest.addHeader(Constants.X_EBAY_API_APP_NAME, "");
-            postRequest.addHeader(Constants.X_EBAY_API_CERT_NAME, "");
+            postRequest.addHeader(Constants.X_EBAY_API_DEV_NAME, PropertiesConfig.getInstance().getCredentials().getProperty("api.credentials.x_ebay_api_dev_name"));
+            postRequest.addHeader(Constants.X_EBAY_API_APP_NAME, PropertiesConfig.getInstance().getCredentials().getProperty("api.credentials.x_ebay_api_app_name"));
+            postRequest.addHeader(Constants.X_EBAY_API_CERT_NAME, PropertiesConfig.getInstance().getCredentials().getProperty("x_ebay_api_cert_name"));
             postRequest.addHeader(Constants.X_EBAY_API_DETAIL_LEVEL, "0");
 
             //Set the request post body
