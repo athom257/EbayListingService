@@ -1,0 +1,19 @@
+MAKING API CALLS
+
+https://developer.ebay.com/Devzone/XML/docs/Concepts/MakingACall.html#CallFormats
+
+Example of CDATA:
+
+<Description>
+
+<![CDATA[<div style="color: rgb(127, 130, 129); font-family: Proxima Nova Light">
+<h4 style="margin: 0px 0px 13px; padding: 0px">PRODUCT DESCRIPTION</h4>
+<div style="padding-bottom: 5px; line-height: 25px; font-size: 16px">
+<ul><li>Brand new 1/64 scale diecast model of Peterbilt 359 with 63\" Flattop Sleeper Cab with 53' Utility Tautliner Spread-Axle Trailer Black with Gold and Red Stripes die cast model by DCP/First Gear.</li><li>Brand new box.</li><li>Real rubber tires.</li><li>Pivoting fifth-wheel.</li><li>Poseable front wheels.</li><li>Detailed undercarriage.</li><li>Has opening rear doors.</li><li>Detailed interior, exterior.</li><li>Functioning landing gears.</li><li>Trailer sides have soft feel.</li><li>Made of diecast with some plastic parts.</li><li>Opening hood with authentic engine detail.</li><li>Dimensions approximately L-14, W-1.75, H-2.75 inches.</li><li>Removable side curtains by utilizing special snap design on inside bottom of curtain sides.</li></ul>
+</div>
+60-0753
+<h4 style="margin-top: 15px; margin-bottom: 10px">RETURN POLICY</h4>
+Returns are accepted within 30 days of delivery date. Item must be returned unopened in the same new condition as it was shipped with packing slip.
+</div>]]>
+
+</Description>

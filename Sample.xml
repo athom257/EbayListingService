@@ -1,0 +1,97 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<VerifyAddItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">
+    <RequesterCredentials>
+        <eBayAuthToken>********************</eBayAuthToken>
+    </RequesterCredentials>
+    <Version>1081</Version>
+    <WarningLevel>Low</WarningLevel>
+    <Item>
+        <AutoPay>true</AutoPay>
+        <BuyerResponsibleForShipping>false</BuyerResponsibleForShipping>
+        <Title>2019 GMC Sierra 1500 Denali Crew Cab Pickup Truck Model</Title>
+        <Description>
+            <![CDATA[<div style="color: rgb(127, 130, 129); font-family: Proxima Nova Light">
+            <h4 style="margin: 0px 0px 13px; padding: 0px">PRODUCT DESCRIPTION</h4>
+            <div style="padding-bottom: 5px; line-height: 25px; font-size: 16px">
+            <ul><li>Brand new 1/64 scale diecast model of Peterbilt 359 with 63\" Flattop Sleeper Cab with 53' Utility Tautliner Spread-Axle Trailer Black with Gold and Red Stripes die cast model by DCP/First Gear.</li><li>Brand new box.</li><li>Real rubber tires.</li><li>Pivoting fifth-wheel.</li><li>Poseable front wheels.</li><li>Detailed undercarriage.</li><li>Has opening rear doors.</li><li>Detailed interior, exterior.</li><li>Functioning landing gears.</li><li>Trailer sides have soft feel.</li><li>Made of diecast with some plastic parts.</li><li>Opening hood with authentic engine detail.</li><li>Dimensions approximately L-14, W-1.75, H-2.75 inches.</li><li>Removable side curtains by utilizing special snap design on inside bottom of curtain sides.</li></ul>
+            </div>
+            60-0753
+            <h4 style="margin-top: 15px; margin-bottom: 10px">RETURN POLICY</h4>
+            Returns are accepted within 30 days of delivery date. Item must be returned unopened in the same new condition as it was shipped with packing slip.
+            </div>]]>
+        </Description>
+        <PrimaryCategory>
+            <CategoryID>180506</CategoryID>
+        </PrimaryCategory>
+        <StartPrice>33.90</StartPrice>
+        <ConditionID>1000</ConditionID>
+        <Currency>USD</Currency>
+        <Country>US</Country>
+        <DispatchTimeMax>3</DispatchTimeMax>
+        <ListingDuration>GTC</ListingDuration>
+        <ListingType>FixedPriceItem</ListingType>
+        <PaymentMethods>PayPal</PaymentMethods>
+        <PayPalEmailAddress>an00@yahoo.com</PayPalEmailAddress>
+        <PictureDetails>
+            <PictureURL>https://cdn10.bigcommerce.com/s-g4qhh/products/10100/images/15401/79362bl__37051.1585181633.800.600.JPG?c=2</PictureURL>
+        </PictureDetails>
+        <PostalCode>90640</PostalCode>
+        <Quantity>1</Quantity>
+        <ItemSpecifics>
+            <NameValueList>
+                <Name>Brand</Name>
+                <Value>Motormax</Value>
+            </NameValueList>
+        </ItemSpecifics>
+        <ReturnPolicy>
+            <ReturnsAcceptedOption>ReturnsAccepted</ReturnsAcceptedOption>
+            <RefundOption>MoneyBack</RefundOption>
+            <ReturnsWithinOption>Days_30</ReturnsWithinOption>
+            <ShippingCostPaidByOption>Seller</ShippingCostPaidByOption>
+        </ReturnPolicy>
+        <ShippingDetails>
+            <ShippingType>Flat</ShippingType>
+            <ExcludeShipToLocation>Alaska/Hawaii</ExcludeShipToLocation>
+            <ExcludeShipToLocation>US Protectorates</ExcludeShipToLocation>
+            <ExcludeShipToLocation>APO/FPO</ExcludeShipToLocation>
+            <ExcludeShipToLocation>Africa</ExcludeShipToLocation>
+            <ExcludeShipToLocation>Europe</ExcludeShipToLocation>
+            <ExcludeShipToLocation>Asia</ExcludeShipToLocation>
+            <ExcludeShipToLocation>Oceania</ExcludeShipToLocation>
+            <ExcludeShipToLocation>Middle East</ExcludeShipToLocation>
+            <ExcludeShipToLocation>Southeast Asia</ExcludeShipToLocation>
+            <ExcludeShipToLocation>Central America and Caribbean</ExcludeShipToLocation>
+            <ExcludeShipToLocation>North America</ExcludeShipToLocation>
+            <ExcludeShipToLocation>South America</ExcludeShipToLocation>
+            <ExcludeShipToLocation>PO Box</ExcludeShipToLocation>
+            <ShippingServiceOptions>
+                <FreeShipping>true</FreeShipping>
+                <ShippingServicePriority>1</ShippingServicePriority>
+                <ShippingService>USPSStandardPost</ShippingService>
+                <ShippingServiceCost>0.00</ShippingServiceCost>
+            </ShippingServiceOptions>
+        </ShippingDetails>
+        <Site>US</Site>
+    </Item>
+</VerifyAddItemRequest>
+
+
+<!--
+HTTP Headers
+
+Key                                    Value
+====                                   ======
+X-EBAY-API-COMPATIBILITY-LEVEL         1081
+X-EBAY-API-CALL-NAME                   VerifyAddItem
+X-EBAY-API-SITEID                      0
+X-EBAY-API-DEV-NAME                    ***********
+X-EBAY-API-APP-NAME                    ***********
+X-EBAY-API-CERT-NAME                   ***********
+X-EBAY-API-DETAIL-LEVEL                0
+Content-Type                           application/xml
+
+
+Endpoint:  https://api.ebay.com/ws/api.dll
+
+-->
