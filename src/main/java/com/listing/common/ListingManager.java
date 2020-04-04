@@ -36,6 +36,7 @@ public class ListingManager {
             apiName = "AddItem";
         }
 
+        /* Make call to ebay API */
         //HttpClient.sendRequest(xmlRequest, apiName);
 
         /* Insert into sku item table. */
