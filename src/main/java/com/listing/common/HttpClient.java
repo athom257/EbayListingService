@@ -28,7 +28,7 @@ public class HttpClient {
             postRequest.addHeader(Constants.X_EBAY_API_SITEID, "0");
             postRequest.addHeader(Constants.X_EBAY_API_DEV_NAME, PropertiesConfig.getInstance().getCredentials().getProperty("api.credentials.x_ebay_api_dev_name"));
             postRequest.addHeader(Constants.X_EBAY_API_APP_NAME, PropertiesConfig.getInstance().getCredentials().getProperty("api.credentials.x_ebay_api_app_name"));
-            postRequest.addHeader(Constants.X_EBAY_API_CERT_NAME, PropertiesConfig.getInstance().getCredentials().getProperty("x_ebay_api_cert_name"));
+            postRequest.addHeader(Constants.X_EBAY_API_CERT_NAME, PropertiesConfig.getInstance().getCredentials().getProperty("api.credentials.x_ebay_api_cert_name"));
             postRequest.addHeader(Constants.X_EBAY_API_DETAIL_LEVEL, "0");
 
             //Set the request post body

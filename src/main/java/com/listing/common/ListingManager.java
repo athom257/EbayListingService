@@ -37,10 +37,10 @@ public class ListingManager {
         }
 
         /* Make call to ebay API */
-        //HttpClient.sendRequest(xmlRequest, apiName);
+        HttpClient.sendRequest(xmlRequest, apiName);
 
         /* Insert into sku item table. */
-        // EbaySkuItemDAO.getInstance().insertSkuItem(skuCode, listingPrice, promoCode);
+        EbaySkuItemDAO.getInstance().insertSkuItem(skuCode, listingPrice, promoCode);
     }
 
     private static String jaxbObjectToXML(Object obj) {
