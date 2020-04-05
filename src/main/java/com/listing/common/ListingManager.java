@@ -28,7 +28,7 @@ public class ListingManager {
         VendorSkuItemDTO vendorSkuItemDTO =
                 vendorSkuItemDAO.queryVendorSkuItem(skuCode);
 
-        AddItemRequestType obj = RequestItemGenerator.createAddItem(vendorSkuItemDTO, listingPrice);
+        AddItemRequestType obj = RequestItemGenerator.createAddItem(vendorSkuItemDTO, listingPrice, promoCode);
         // VerifyAddItemRequestType obj = RequestItemGenerator.verifyAddItem(vendorSkuItemDTO, listingPrice);
 
         String xmlRequest = jaxbObjectToXML(obj);

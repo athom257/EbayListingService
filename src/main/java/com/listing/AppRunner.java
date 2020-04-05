@@ -10,6 +10,6 @@ public class AppRunner {
             System.exit(0);
         }
 
-        ListingManager.process(args[0], args[1], "");
+        ListingManager.process(args[0], args[1], "P4");
     }
 }

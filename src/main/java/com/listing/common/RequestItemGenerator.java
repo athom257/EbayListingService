@@ -71,7 +71,8 @@ public class RequestItemGenerator {
 
 
 
-    public static AddItemRequestType createAddItem(VendorSkuItemDTO vendorSkuItemDTO, String listingPrice) {
+    public static AddItemRequestType createAddItem(VendorSkuItemDTO vendorSkuItemDTO, String listingPrice, String promoCode) {
+        String title = null;
 
         AddItemRequestType addItemRequestType = new AddItemRequestType();
         addItemRequestType.setRequesterCredentials(getRequesterCredentials());
@@ -83,10 +84,16 @@ public class RequestItemGenerator {
         itemType.setAutoPay(true);
         itemType.setBuyerResponsibleForShipping(false);
 
-        if (vendorSkuItemDTO.getItem_name().length() > 75) {
-            itemType.setTitle(vendorSkuItemDTO.getItem_name().substring(0, 74));
+        if (promoCode != null) {
+            title = "(" + promoCode + ") - " + vendorSkuItemDTO.getItem_name();
         } else {
-            itemType.setTitle(vendorSkuItemDTO.getItem_name());
+            title = vendorSkuItemDTO.getItem_name();
+        }
+
+        if (title.length() > 75) {
+            itemType.setTitle(title.substring(0, 74));
+        } else {
+            itemType.setTitle(title);
         }
         itemType.setPrimaryCategory(getCategoryType());
 

@@ -50,6 +50,10 @@ public class HttpClient {
             String responseXML = EntityUtils.toString(response.getEntity(), Charset.forName("UTF-8").toString());
             System.out.println(responseXML);
 
+            if (!responseXML.contains("<Ack>Success</Ack>")) {
+                throw new Exception("<Ack>Failure from Ebay API Call</Ack>");
+            }
+
         }
         finally {
             //Important: Close the connect
