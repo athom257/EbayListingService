@@ -53,10 +53,10 @@ public class VendorSkuItemDAO {
     }
 
 
-    public List<String> queryListOfSkuCodes(String vendorPrice) {
+    public List<String> queryListOfSkuCodes(String vendorSalesPrice, int threshold) {
         List<String> skuList = new ArrayList<>();
         int counter = 0;
-        Object [] parms = { new BigDecimal(vendorPrice) };
+        Object [] parms = { new BigDecimal(vendorSalesPrice) };
         List<String> list = jdbcTemplate.query(SQL_QUERY_SKU_LIST, parms, (rs, rowNum) ->
                 rs.getString("sku_code"));
 
@@ -66,7 +66,7 @@ public class VendorSkuItemDAO {
 
             skuList.add(sku);
             // Threshold.
-            if (counter == 10) {
+            if (counter == threshold) {
                 break;
             }
         }

@@ -8,13 +8,12 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-
-import java.io.InputStream;
 import java.nio.charset.Charset;
+import static com.listing.util.Constants.API_NAME;
 
 public class HttpClient {
 
-    public static void sendRequest(String xmlRequest, String apiCallName) throws Exception {
+    public static void sendRequest(String xmlRequest) throws Exception {
         DefaultHttpClient httpClient = new DefaultHttpClient();
 
         try {
@@ -24,7 +23,7 @@ public class HttpClient {
             //Set the API media type in http content-type header
             postRequest.addHeader(Constants.CONTENT_TYPE, "application/xml");
             postRequest.addHeader(Constants.X_EBAY_API_COMPATIBILITY_LEVEL, "1081");
-            postRequest.addHeader(Constants.X_EBAY_API_CALL_NAME, apiCallName);
+            postRequest.addHeader(Constants.X_EBAY_API_CALL_NAME, API_NAME);
             postRequest.addHeader(Constants.X_EBAY_API_SITEID, "0");
             postRequest.addHeader(Constants.X_EBAY_API_DEV_NAME, PropertiesConfig.getInstance().getCredentials().getProperty("api.credentials.x_ebay_api_dev_name"));
             postRequest.addHeader(Constants.X_EBAY_API_APP_NAME, PropertiesConfig.getInstance().getCredentials().getProperty("api.credentials.x_ebay_api_app_name"));
@@ -42,16 +41,15 @@ public class HttpClient {
             System.out.println("Http Status Response: " + statusCode);
 
             //verify the valid error code first
-            if (statusCode != 200)
-            {
+            if (statusCode != 200) {
                 throw new RuntimeException("Failed with HTTP error code : " + statusCode);
             }
 
             String responseXML = EntityUtils.toString(response.getEntity(), Charset.forName("UTF-8").toString());
             System.out.println(responseXML);
 
-            if (!responseXML.contains("<Ack>Success</Ack>")) {
-                throw new Exception("<Ack>Failure from Ebay API Call</Ack>");
+            if ((!responseXML.contains("<Ack>Success</Ack>")) && (!responseXML.contains("<Ack>Warning</Ack>"))) {
+                throw new Exception("**** Failure from Ebay API Call ****");
             }
 
         }

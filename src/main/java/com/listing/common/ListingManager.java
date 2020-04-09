@@ -10,22 +10,21 @@ import javax.xml.bind.Marshaller;
 import java.io.StringWriter;
 import java.util.List;
 
+import static com.listing.util.Constants.API_NAME;
+
 
 public class ListingManager {
 
     private static VendorSkuItemDAO vendorSkuItemDAO = VendorSkuItemDAO.getInstance();
 
+    public static void process(String ebayListingPrice, String vendorSalesPrice, String promoCode, int listingThreshold) throws Exception {
 
-    public static void process(String skuCode, String listingPrice, String promoCode) throws Exception {
-        String apiName;
-
-        List<String> skuCodeList = vendorSkuItemDAO.queryListOfSkuCodes("24.99");
+        List<String> skuCodeList = vendorSkuItemDAO.queryListOfSkuCodes(vendorSalesPrice, listingThreshold);
 
         for (String vendorSku : skuCodeList) {
-            skuCode = vendorSku;
 
             // Does sku exists in ebay_sku_item table.
-            int skuCount = EbaySkuItemDAO.getInstance().getSkuCount(skuCode);
+            int skuCount = EbaySkuItemDAO.getInstance().getSkuCount(vendorSku);
 
             if (skuCount > 0) {
                 System.out.println("***** SKU ALREADY EXISTS *****");
@@ -35,36 +34,30 @@ public class ListingManager {
             Thread.sleep(3000);
 
             VendorSkuItemDTO vendorSkuItemDTO =
-                    vendorSkuItemDAO.queryVendorSkuItem(skuCode);
+                    vendorSkuItemDAO.queryVendorSkuItem(vendorSku);
 
-            AddItemRequestType obj = RequestItemGenerator.createAddItem(vendorSkuItemDTO, listingPrice, promoCode);
-
+            AddItemRequestType obj = RequestItemGenerator.createAddItem(vendorSkuItemDTO, ebayListingPrice, promoCode);
             String xmlRequest = jaxbObjectToXML(obj);
-            if (obj instanceof AddItemRequestType) {
-                apiName = "AddItem";
-            } else {
-                apiName = "VerifyAddItem";
+
+            if (listOnEbay(xmlRequest)) {
+                /* Insert into sku item table. */
+                EbaySkuItemDAO.getInstance().insertSkuItem(vendorSku, ebayListingPrice, promoCode);
             }
-
-            // Refactor later.
-
-            try {
-                /* Make call to ebay API */
-                HttpClient.sendRequest(xmlRequest, apiName);
-            } catch (Exception e) {
-                continue;
-            }
-
-            /* Insert into sku item table. */
-            EbaySkuItemDAO.getInstance().insertSkuItem(skuCode, listingPrice, promoCode);
-        }
+        } // end for.
     }
 
 
+    private static boolean listOnEbay(String xmlRequest) {
+        boolean isSuccess = true;
+        try {
+            /* Make call to ebay API */
+            HttpClient.sendRequest(xmlRequest);
+        } catch (Exception ex) {
+            isSuccess = false;
+        }
 
-
-
-
+        return isSuccess;
+    }
 
 
     private static String jaxbObjectToXML(Object obj) {

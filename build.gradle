@@ -35,4 +35,4 @@ run {
     }
 }
 
-// example: gradlew run -PappArgs="['sku_code', '12.50']"
+// example: gradlew run -PappArgs="['33.60', '25.99', 'P4', '1']"

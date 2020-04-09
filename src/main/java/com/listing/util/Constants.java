@@ -16,7 +16,6 @@ public class Constants {
     public static final String DB_DRIVER_CLASS_NAME = "org.postgresql.Driver";
     public static final String DB_URL = "jdbc:postgresql://localhost:5432/testdb";
 
-    public static final String TOKEN = "";
     public static final String X_EBAY_API_COMPATIBILITY_LEVEL = "X-EBAY-API-COMPATIBILITY-LEVEL";
     public static final String X_EBAY_API_CALL_NAME = "X-EBAY-API-CALL-NAME";
     public static final String X_EBAY_API_SITEID = "X-EBAY-API-SITEID";
@@ -25,6 +24,7 @@ public class Constants {
     public static final String X_EBAY_API_CERT_NAME = "X-EBAY-API-CERT-NAME";
     public static final String X_EBAY_API_DETAIL_LEVEL = "X-EBAY-API-DETAIL-LEVEL";
     public static final String CONTENT_TYPE = "Content-Type";
+    public static final String API_NAME = "AddItem";
 
     public static final String URL = "https://api.ebay.com/ws/api.dll";
 
