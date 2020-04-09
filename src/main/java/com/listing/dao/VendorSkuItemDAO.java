@@ -4,6 +4,8 @@ import com.listing.dto.VendorSkuItemDTO;
 import com.listing.util.DBConfig;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VendorSkuItemDAO {
@@ -13,6 +15,11 @@ public class VendorSkuItemDAO {
     private static final String SQL_QUERY = "SELECT sku_code, item_name, brand, img_url, item_description" +
                                             " FROM vendor_sku_item" +
                                             " WHERE sku_code = ? ";
+
+
+    private static final String SQL_QUERY_SKU_LIST = "SELECT sku_code FROM vendor_sku_item" +
+                                                     " WHERE price = ? " +
+                                                     " AND sku_code NOT IN (SELECT sku_code FROM ebay_sku_item)";
 
     private static VendorSkuItemDAO vendorSkuItemDAO = new VendorSkuItemDAO();
 
@@ -43,5 +50,27 @@ public class VendorSkuItemDAO {
             break;
         }
         return vendorSkuItemDTO;
+    }
+
+
+    public List<String> queryListOfSkuCodes(String vendorPrice) {
+        List<String> skuList = new ArrayList<>();
+        int counter = 0;
+        Object [] parms = { new BigDecimal(vendorPrice) };
+        List<String> list = jdbcTemplate.query(SQL_QUERY_SKU_LIST, parms, (rs, rowNum) ->
+                rs.getString("sku_code"));
+
+        for (String sku : list) {
+            ++counter;
+            System.out.println("Count: " + counter +  "  Sku: " + sku);
+
+            skuList.add(sku);
+            // Threshold.
+            if (counter == 10) {
+                break;
+            }
+        }
+
+        return skuList;
     }
 }
