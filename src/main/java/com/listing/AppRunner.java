@@ -8,7 +8,7 @@ public class AppRunner {
 
 
         if (args.length != 4) {
-            System.out.println("Must pass ['ebayListingPrice' 'vendorPrice' 'promoCode' 'listingThreshold'] .");
+            System.out.println("Must pass ['vendorPrice' 'ebayListingPrice' 'promoCode' 'listingThreshold'] .");
             System.exit(0);
         }
 

@@ -9,69 +9,7 @@ import java.util.List;
 
 public class RequestItemGenerator {
 
-    public static VerifyAddItemRequestType verifyAddItem(VendorSkuItemDTO vendorSkuItemDTO, String listingPrice) {
-
-        VerifyAddItemRequestType verifyAddItemRequestType = new VerifyAddItemRequestType();
-        verifyAddItemRequestType.setRequesterCredentials(getRequesterCredentials());
-        verifyAddItemRequestType.setVersion("1081");
-        verifyAddItemRequestType.setWarningLevel(WarningLevelCodeType.LOW);
-
-        // ItemType
-        ItemType itemType = new ItemType();
-        itemType.setAutoPay(true);
-        itemType.setBuyerResponsibleForShipping(false);
-
-        if (vendorSkuItemDTO.getItem_name().length() > 75) {
-            itemType.setTitle(vendorSkuItemDTO.getItem_name().substring(0, 74));
-        } else {
-            itemType.setTitle(vendorSkuItemDTO.getItem_name());
-        }
-        itemType.setPrimaryCategory(getCategoryType());
-
-        AmountType amountType = new AmountType();
-        amountType.setValue(Double.valueOf(listingPrice));
-        amountType.setCurrencyID(CurrencyCodeType.USD);
-        itemType.setStartPrice(amountType);
-        itemType.setConditionID(Integer.valueOf("1000"));
-        itemType.setCurrency(CurrencyCodeType.USD);
-        itemType.setCountry(CountryCodeType.US);
-        itemType.setDispatchTimeMax(Integer.valueOf("3"));
-        itemType.setListingDuration("GTC");
-        itemType.setListingType(ListingTypeCodeType.FIXED_PRICE_ITEM);
-        itemType.setPaymentMethods(BuyerPaymentMethodCodeType.PAY_PAL);
-        itemType.setPayPalEmailAddress("antone_thomas2000@yahoo.com");
-        itemType.setPictureDetails(getPictureDetailsType(vendorSkuItemDTO.getImg_url()));
-        itemType.setPostalCode("90640");
-        itemType.setQuantity(Integer.valueOf("1"));
-
-        List<NameValueListType> nameValueList = new ArrayList<>();
-        NameValueListType nameValueListType = new NameValueListType();
-        nameValueListType.setName("Brand");
-        nameValueListType.setValue(vendorSkuItemDTO.getBrand().trim());
-        nameValueList.add(nameValueListType);
-
-        NameValueListArrayType itemSpecifics = new NameValueListArrayType();
-        itemSpecifics.setNameValueList(nameValueList);
-        itemType.setItemSpecifics(itemSpecifics);
-        itemType.setReturnPolicy(getReturnPolicy());
-        itemType.setShippingDetails(getShippingDetails());
-        itemType.setSite(SiteCodeType.US);
-        itemType.setDescription("<![CDATA[" +
-                Constants.HTML_DATA_PRODUCT_DESCRIPTION.toString() +
-                vendorSkuItemDTO.getItem_description() +
-                Constants.HTML_DIV_ELEMENT_END +
-                vendorSkuItemDTO.getSku_code().trim() +
-                Constants.HTML_DATA_RETURN_POLICY.toString() +
-                Constants.HTML_DIV_ELEMENT_END +
-                "]]>");
-
-        verifyAddItemRequestType.setItem(itemType);
-        return verifyAddItemRequestType;
-    }
-
-
-
-    public static AddItemRequestType createAddItem(VendorSkuItemDTO vendorSkuItemDTO, String listingPrice, String promoCode) {
+    public static AddItemRequestType createAddItem(VendorSkuItemDTO vendorSkuItemDTO, String listingPrice, String listingCode) {
         String title = null;
 
         AddItemRequestType addItemRequestType = new AddItemRequestType();
@@ -84,11 +22,7 @@ public class RequestItemGenerator {
         itemType.setAutoPay(true);
         itemType.setBuyerResponsibleForShipping(false);
 
-        if (promoCode != null) {
-            title = "(" + promoCode + ") - " + vendorSkuItemDTO.getItem_name();
-        } else {
-            title = vendorSkuItemDTO.getItem_name();
-        }
+        title = "(" + listingCode + ") - " + vendorSkuItemDTO.getItem_name();
 
         if (title.length() > 75) {
             itemType.setTitle(title.substring(0, 74));

@@ -1,5 +1,6 @@
 package com.listing.common;
 
+import com.listing.dao.EbayListingDAO;
 import com.listing.dao.EbaySkuItemDAO;
 import com.listing.dao.VendorSkuItemDAO;
 import com.listing.dto.VendorSkuItemDTO;
@@ -10,14 +11,17 @@ import javax.xml.bind.Marshaller;
 import java.io.StringWriter;
 import java.util.List;
 
-import static com.listing.util.Constants.API_NAME;
-
 
 public class ListingManager {
 
     private static VendorSkuItemDAO vendorSkuItemDAO = VendorSkuItemDAO.getInstance();
 
-    public static void process(String ebayListingPrice, String vendorSalesPrice, String promoCode, int listingThreshold) throws Exception {
+    private static EbayListingDAO ebayListingDAO = EbayListingDAO.getInstance();
+
+    private static EbaySkuItemDAO ebaySkuItemDAO = EbaySkuItemDAO.getInstance();
+
+
+    public static void process(String vendorSalesPrice, String ebayListingPrice, String promoCode, int listingThreshold) throws Exception {
 
         List<String> skuCodeList = vendorSkuItemDAO.queryListOfSkuCodes(vendorSalesPrice, listingThreshold);
 
@@ -27,7 +31,7 @@ public class ListingManager {
             int skuCount = EbaySkuItemDAO.getInstance().getSkuCount(vendorSku);
 
             if (skuCount > 0) {
-                System.out.println("***** SKU ALREADY EXISTS *****");
+                System.out.println("***** SKU ALREADY LISTED *****");
                 continue;
             }
 
@@ -36,12 +40,21 @@ public class ListingManager {
             VendorSkuItemDTO vendorSkuItemDTO =
                     vendorSkuItemDAO.queryVendorSkuItem(vendorSku);
 
-            AddItemRequestType obj = RequestItemGenerator.createAddItem(vendorSkuItemDTO, ebayListingPrice, promoCode);
+            String listingCode = ebayListingDAO.generateListingCode(promoCode);
+            if (listingCode.equalsIgnoreCase("PROMO_LISTING_EXPIRED")) {
+                System.out.println("The current promo_code has expired. Create new promo code listing.");
+                break;
+            }
+
+            AddItemRequestType obj = RequestItemGenerator.createAddItem(vendorSkuItemDTO, ebayListingPrice, listingCode);
             String xmlRequest = jaxbObjectToXML(obj);
 
             if (listOnEbay(xmlRequest)) {
                 /* Insert into sku item table. */
-                EbaySkuItemDAO.getInstance().insertSkuItem(vendorSku, ebayListingPrice, promoCode);
+                ebaySkuItemDAO.insertSkuItem(vendorSku, ebayListingPrice, promoCode);
+
+                /* Insert into ebay listing table. */
+                ebayListingDAO.insertListing(listingCode, promoCode, vendorSku);
             }
         } // end for.
     }
