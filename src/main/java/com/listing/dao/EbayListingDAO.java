@@ -31,10 +31,11 @@ public class EbayListingDAO {
     }
 
     public String generateListingCode(String promoCode) {
-        if (getPromoCount(promoCode) > 998) {
+        int cnt = getPromoCount(promoCode);
+        if (cnt > 998) {
             return "PROMO_LISTING_EXPIRED";
         }
-        return promoCode + "-" + StringUtils.leftPad(String.valueOf(getPromoCount(promoCode) + 1), 3);
+        return promoCode + "-" + StringUtils.leftPad(String.valueOf(cnt + 1), 3);
     }
 
     public void insertListing(String listingCode, String promoCode,  String skuCode) {
