@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.listing'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 
 repositories {
@@ -38,4 +38,4 @@ run {
     }
 }
 
-// example: gradlew run -PappArgs="['33.60', '25.99', 'P4', '1']"
+// example: gradlew run -PappArgs="['25.99', '33.60', 'P4', '1']"

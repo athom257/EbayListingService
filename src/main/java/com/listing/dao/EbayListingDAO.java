@@ -35,7 +35,7 @@ public class EbayListingDAO {
         if (cnt > 998) {
             return "PROMO_LISTING_EXPIRED";
         }
-        return promoCode + "-" + StringUtils.leftPad(String.valueOf(cnt + 1), 3);
+        return promoCode + "-" + StringUtils.leftPad(String.valueOf(cnt + 1), 3, "0");
     }
 
     public void insertListing(String listingCode, String promoCode,  String skuCode) {
