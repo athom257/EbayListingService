@@ -49,6 +49,7 @@ public class HttpClient {
             System.out.println(responseXML);
 
             if ((!responseXML.contains("<Ack>Success</Ack>")) && (!responseXML.contains("<Ack>Warning</Ack>"))) {
+                System.out.println("**** Failure from Ebay API Call ****");
                 throw new Exception("**** Failure from Ebay API Call ****");
             }
 
