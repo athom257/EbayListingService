@@ -51,7 +51,7 @@ public class ListingManager {
 
             if (listOnEbay(xmlRequest)) {
                 /* Insert into sku item table. */
-                ebaySkuItemDAO.insertSkuItem(vendorSku, ebayListingPrice, promoCode);
+                ebaySkuItemDAO.insertSkuItem(vendorSku, ebayListingPrice, listingCode);
 
                 /* Insert into ebay listing table. */
                 ebayListingDAO.insertListing(listingCode, promoCode, vendorSku);
