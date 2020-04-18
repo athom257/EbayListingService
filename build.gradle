@@ -38,4 +38,4 @@ run {
     }
 }
 
-// example: gradlew run -PappArgs="['25.99', '33.60', 'P4', '1']"
+
