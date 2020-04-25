@@ -2,4 +2,7 @@ MAKING API CALLS
 
 https://developer.ebay.com/Devzone/XML/docs/Concepts/MakingACall.html#CallFormats
 
-Running Application: gradlew run -PappArgs="['25.99', '33.60', 'P4', '1']"
+Running Application: gradlew run -PappArgs="['25.99', '33.60', 'P5', '1']"
+
+END LISTING API
+https://developer.ebay.com/devzone/xml/docs/reference/ebay/EndItem.html

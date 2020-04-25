@@ -2,18 +2,23 @@ package com.listing.common;
 
 import com.listing.util.Constants;
 import com.listing.util.PropertiesConfig;
-import org.apache.http.HttpEntity;
+import ebay.apis.eblbasecomponents.AddItemResponseType;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+import java.io.StringReader;
 import java.nio.charset.Charset;
 import static com.listing.util.Constants.API_NAME;
 
+
+
 public class HttpClient {
 
-    public static void sendRequest(String xmlRequest) throws Exception {
+    public static void sendRequest(EbayRequest ebayRequest) throws Exception {
         DefaultHttpClient httpClient = new DefaultHttpClient();
 
         try {
@@ -31,7 +36,7 @@ public class HttpClient {
             postRequest.addHeader(Constants.X_EBAY_API_DETAIL_LEVEL, "0");
 
             //Set the request post body
-            StringEntity userEntity = new StringEntity(xmlRequest);
+            StringEntity userEntity = new StringEntity(ebayRequest.getXmlRequest());
             postRequest.setEntity(userEntity);
 
             // Send the request; It will immediately return the response in HttpResponse object if any
@@ -42,17 +47,27 @@ public class HttpClient {
 
             //verify the valid error code first
             if (statusCode != 200) {
-                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+                throw new Exception("Failed with HTTP status code : " + statusCode);
             }
 
             String responseXML = EntityUtils.toString(response.getEntity(), Charset.forName("UTF-8").toString());
+
             System.out.println(responseXML);
 
-            if ((!responseXML.contains("<Ack>Success</Ack>")) && (!responseXML.contains("<Ack>Warning</Ack>"))) {
-                System.out.println("**** Failure from Ebay API Call ****");
-                throw new Exception("**** Failure from Ebay API Call ****");
-            }
+            // Convert XML to Object.
+            JAXBContext jaxbContext = JAXBContext.newInstance(AddItemResponseType.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            AddItemResponseType addItemResponseType = (AddItemResponseType) jaxbUnmarshaller.unmarshal(new StringReader(responseXML));
 
+            String ackCode = addItemResponseType.getAck().value();
+            System.out.println("ackCode = " + ackCode);
+
+            if (("SUCCESS".equalsIgnoreCase(ackCode)) || ("WARNING".equalsIgnoreCase(ackCode))) {
+                ebayRequest.setItemID(addItemResponseType.getItemID());
+                System.out.println("itemID = " + ebayRequest.getItemID());
+            } else {
+                throw new Exception(" **** Ack Failure from Ebay API Call **** ");
+            }
         }
         finally {
             //Important: Close the connect

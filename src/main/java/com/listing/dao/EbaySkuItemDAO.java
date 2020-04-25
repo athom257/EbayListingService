@@ -18,7 +18,8 @@ public class EbaySkuItemDAO {
             " FROM ebay_sku_item" +
             " WHERE sku_code = ? ";
 
-    public static final String SQL_INSERT = "INSERT INTO ebay_sku_item (sku_code, ebay_list_price, active, created_on, sku_name, listing_code ) VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
+    public static final String SQL_INSERT = "INSERT INTO ebay_sku_item (sku_code, ebay_list_price, active, created_on, sku_name, listing_code, itemid ) "
+                                          + " VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?, ?, ?)";
 
     private final String VENDOR_SELECT_SQL = "SELECT item_name FROM vendor_sku_item WHERE sku_code = ? ";
 
@@ -41,9 +42,9 @@ public class EbaySkuItemDAO {
     }
 
 
-    public void insertSkuItem(String skuCode, String price, String listingCode) throws Exception {
+    public void insertSkuItem(String skuCode, String price, String listingCode, String itemID) throws Exception {
         // define insert parameters.
-        Object[] params = new Object[]{skuCode, new BigDecimal(price.trim()), true, queryVendorName(skuCode), listingCode };
+        Object[] params = new Object[] { skuCode, new BigDecimal(price.trim()), true, queryVendorName(skuCode), listingCode, itemID };
         jdbcTemplate.update(SQL_INSERT, params);
     }
 

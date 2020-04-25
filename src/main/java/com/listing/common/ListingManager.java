@@ -5,7 +5,7 @@ import com.listing.dao.EbaySkuItemDAO;
 import com.listing.dao.VendorSkuItemDAO;
 import com.listing.dto.VendorSkuItemDTO;
 import ebay.apis.eblbasecomponents.AddItemRequestType;
-import ebay.apis.eblbasecomponents.VerifyAddItemRequestType;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import java.io.StringWriter;
@@ -27,6 +27,11 @@ public class ListingManager {
 
         for (String vendorSku : skuCodeList) {
 
+            // Max sku length table definition is 25.
+            if (vendorSku.length() > 25) {
+                continue;
+            }
+
             // Does sku exists in ebay_sku_item table.
             int skuCount = EbaySkuItemDAO.getInstance().getSkuCount(vendorSku);
 
@@ -35,7 +40,7 @@ public class ListingManager {
                 continue;
             }
 
-            Thread.sleep(3000);
+            Thread.sleep(2000);
 
             VendorSkuItemDTO vendorSkuItemDTO =
                     vendorSkuItemDAO.queryVendorSkuItem(vendorSku);
@@ -49,9 +54,12 @@ public class ListingManager {
             AddItemRequestType obj = RequestItemGenerator.createAddItem(vendorSkuItemDTO, ebayListingPrice, listingCode);
             String xmlRequest = jaxbObjectToXML(obj);
 
-            if (listOnEbay(xmlRequest)) {
+            EbayRequest ebayRequest = new EbayRequest();
+            ebayRequest.setXmlRequest(xmlRequest);
+
+            if (listOnEbay(ebayRequest)) {
                 /* Insert into sku item table. */
-                ebaySkuItemDAO.insertSkuItem(vendorSku, ebayListingPrice, listingCode);
+                ebaySkuItemDAO.insertSkuItem(vendorSku, ebayListingPrice, listingCode, ebayRequest.getItemID());
 
                 /* Insert into ebay listing table. */
                 ebayListingDAO.insertListing(listingCode, promoCode, vendorSku);
@@ -60,11 +68,11 @@ public class ListingManager {
     }
 
 
-    private static boolean listOnEbay(String xmlRequest) {
+    private static boolean listOnEbay(EbayRequest ebayRequest) {
         boolean isSuccess = true;
         try {
             /* Make call to ebay API */
-            HttpClient.sendRequest(xmlRequest);
+            HttpClient.sendRequest(ebayRequest);
         } catch (Exception ex) {
             isSuccess = false;
         }
@@ -79,11 +87,7 @@ public class ListingManager {
 
         try {
             //Create JAXB Context
-            if (obj instanceof  AddItemRequestType) {
-                jaxbContext = JAXBContext.newInstance(AddItemRequestType.class);
-            } else {
-                jaxbContext = JAXBContext.newInstance(VerifyAddItemRequestType.class);
-            }
+            jaxbContext = JAXBContext.newInstance(AddItemRequestType.class);
 
             //Create Marshaller
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -99,7 +103,6 @@ public class ListingManager {
 
             //Verify XML Content
             xmlContent = sw.toString();
-            System.out.println(xmlContent);
 
         } catch (Exception e) {
             e.printStackTrace();
