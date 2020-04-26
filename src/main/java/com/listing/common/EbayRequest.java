@@ -2,9 +2,19 @@ package com.listing.common;
 
 public class EbayRequest {
 
+    private String skuCode;
+
     private String xmlRequest;
 
     private String itemID;
+
+    public String getSkuCode() {
+        return skuCode;
+    }
+
+    public void setSkuCode(String skuCode) {
+        this.skuCode = skuCode;
+    }
 
     public String getXmlRequest() {
         return xmlRequest;
@@ -25,7 +35,8 @@ public class EbayRequest {
     @Override
     public String toString() {
         return "EbayRequest{" +
-                "xmlRequest='" + xmlRequest + '\'' +
+                "skuCode='" + skuCode + '\'' +
+                ", xmlRequest='" + xmlRequest + '\'' +
                 ", itemID='" + itemID + '\'' +
                 '}';
     }

@@ -40,7 +40,7 @@ public class HttpClient {
             postRequest.setEntity(userEntity);
 
             // Send the request; It will immediately return the response in HttpResponse object if any
-            System.out.println("Sending request to " + Constants.URL);
+            System.out.println("Sending request for SKU [" + ebayRequest.getSkuCode() + "] to Ebay gateway: " + Constants.URL);
             HttpResponse response = httpClient.execute(postRequest);
             int statusCode = response.getStatusLine().getStatusCode();
             System.out.println("Http Status Response: " + statusCode);
@@ -51,8 +51,6 @@ public class HttpClient {
             }
 
             String responseXML = EntityUtils.toString(response.getEntity(), Charset.forName("UTF-8").toString());
-
-            System.out.println(responseXML);
 
             // Convert XML to Object.
             JAXBContext jaxbContext = JAXBContext.newInstance(AddItemResponseType.class);

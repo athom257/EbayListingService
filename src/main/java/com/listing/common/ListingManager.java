@@ -54,6 +54,7 @@ public class ListingManager {
 
             EbayRequest ebayRequest = new EbayRequest();
             ebayRequest.setXmlRequest(xmlRequest);
+            ebayRequest.setSkuCode(vendorSku);
 
             if (listOnEbay(ebayRequest)) {
                 /* Insert into sku item table. */
