@@ -40,8 +40,6 @@ public class ListingManager {
                 continue;
             }
 
-            Thread.sleep(2000);
-
             VendorSkuItemDTO vendorSkuItemDTO =
                     vendorSkuItemDAO.queryVendorSkuItem(vendorSku);
 
