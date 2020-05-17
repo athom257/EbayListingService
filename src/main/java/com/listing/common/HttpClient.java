@@ -64,6 +64,7 @@ public class HttpClient {
                 ebayRequest.setItemID(addItemResponseType.getItemID());
                 System.out.println("itemID = " + ebayRequest.getItemID());
             } else {
+                System.out.println("XML Response: " + responseXML);
                 throw new Exception(" **** Ack Failure from Ebay API Call **** ");
             }
         }
